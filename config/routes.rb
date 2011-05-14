@@ -1,4 +1,6 @@
 TodoApp::Application.routes.draw do
+  resources :projekte
+
   resources :aufgaben
 
   # The priority is based upon order of creation:
