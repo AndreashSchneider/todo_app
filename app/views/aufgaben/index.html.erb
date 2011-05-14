@@ -1,0 +1,59 @@
+<h1>Listing aufgaben</h1>
+
+<table>
+  <tr>
+    <th>Erfasst</th>
+    <th>Projekt</th>
+    <th>Aufgabe</th>
+    <th>Erklaerung</th>
+    <th>Information</th>
+    <th>Zustaendig</th>
+    <th>Status</th>
+    <th>Erledigt am</th>
+    <th>Zeit</th>
+    <th>Heute bearbeiten kz</th>
+    <th>Nur heute interessant</th>
+    <th>Mantis nummer</th>
+    <th>Privat</th>
+    <th>Aufgabe</th>
+    <th>Termin</th>
+    <th>Aend dat</th>
+    <th>Reihenfolge</th>
+    <th>Created at</th>
+    <th>Updated at</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @aufgaben.each do |aufgabe| %>
+  <tr>
+    <td><%= aufgabe.erfasst %></td>
+    <td><%= aufgabe.projekt %></td>
+    <td><%= aufgabe.aufgabe %></td>
+    <td><%= aufgabe.erklaerung %></td>
+    <td><%= aufgabe.information %></td>
+    <td><%= aufgabe.zustaendig %></td>
+    <td><%= aufgabe.status %></td>
+    <td><%= aufgabe.erledigt_am %></td>
+    <td><%= aufgabe.zeit %></td>
+    <td><%= aufgabe.heute_bearbeiten_kz %></td>
+    <td><%= aufgabe.nur_heute_interessant %></td>
+    <td><%= aufgabe.mantis_nummer %></td>
+    <td><%= aufgabe.privat %></td>
+    <td><%= aufgabe.aufgabe_id %></td>
+    <td><%= aufgabe.termin %></td>
+    <td><%= aufgabe.aend_dat %></td>
+    <td><%= aufgabe.reihenfolge %></td>
+    <td><%= aufgabe.created_at %></td>
+    <td><%= aufgabe.updated_at %></td>
+    <td><%= link_to 'Show', aufgabe %></td>
+    <td><%= link_to 'Edit', edit_aufgabe_path(aufgabe) %></td>
+    <td><%= link_to 'Destroy', aufgabe, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Aufgabe', new_aufgabe_path %>
