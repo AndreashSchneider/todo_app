@@ -17,7 +17,7 @@
   </div>
   <div class="field">
     <%= f.label :projekt %><br />
-    <%= f.text_field :projekt %>
+    <%= select( :aufgabe, :projekt, @projektliste)  %>
   </div>
   <div class="field">
     <%= f.label :aufgabe %><br />

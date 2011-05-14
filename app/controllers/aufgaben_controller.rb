@@ -25,7 +25,7 @@ class AufgabenController < ApplicationController
   # GET /aufgaben/new.xml
   def new
     @aufgabe = Aufgabe.new
-
+    lov_projekte_fuellen
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @aufgabe }
@@ -35,6 +35,7 @@ class AufgabenController < ApplicationController
   # GET /aufgaben/1/edit
   def edit
     @aufgabe = Aufgabe.find(params[:id])
+    lov_projekte_fuellen
   end
 
   # POST /aufgaben
@@ -79,5 +80,12 @@ class AufgabenController < ApplicationController
       format.html { redirect_to(aufgaben_url) }
       format.xml  { head :ok }
     end
+  end
+
+  # Damit kann die Werteliste auch dynamisch gefüllt werden.
+  def lov_projekte_fuellen
+    @projekte = Projekt.find(:all)
+    @projektliste =[]
+    @projekte.each {|proj| @projektliste << proj.title}
   end
 end
