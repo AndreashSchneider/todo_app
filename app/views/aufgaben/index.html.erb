@@ -2,12 +2,12 @@
 <%= link_to 'New Aufgabe', new_aufgabe_path %>
 <table>
   <tr>
-    <th>Aufgabe</th>
-    <th>Erfasst</th>
-    <th>Projekt</th>
-    <th>Erledigt am</th>
-    <th>Termin</th> 
-    <th>Status</th>
+<th><%= sortable "aufgabe" %></th>
+<th><%= sortable "erfasst" %></th>
+<th><%= sortable "projekt" %></th>
+<th><%= sortable "erledigt_am" %></th>
+<th><%= sortable "termin" %></th>
+<th><%= sortable "status" %></th>
     <th></th>
     <th></th>
     <th></th>

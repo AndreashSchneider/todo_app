@@ -1,14 +1,16 @@
 class AufgabenController < ApplicationController
   # GET /aufgaben
   # GET /aufgaben.xml
+  helper_method :sort_column, :sort_direction 
   def index
-    @aufgaben = Aufgabe.all
-
+    @aufgaben = Aufgabe.order(sort_column + ' ' + sort_direction) 
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @aufgaben }
     end
   end
+
+
 
   # GET /aufgaben/1
   # GET /aufgaben/1.xml
@@ -88,4 +90,12 @@ class AufgabenController < ApplicationController
     @projektliste =[]
     @projekte.each {|proj| @projektliste << proj.title}
   end
+  private  
+   def sort_column  
+     Aufgabe.column_names.include?(params[:sort]) ? params[:sort] : "id"  
+   end  
+     
+   def sort_direction  
+     %w[asc desc].include?(params[:direction]) ?  params[:direction] : "asc"  
+   end
 end
