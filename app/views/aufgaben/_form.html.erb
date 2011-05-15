@@ -11,27 +11,29 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :erfasst %><br />
-    <%= f.text_field :erfasst %>
-  </div>
+
   <div class="field">
     <%= f.label :projekt %><br />
     <%= select( :aufgabe, :projekt, @projektliste)  %>
   </div>
   <div class="field">
     <%= f.label :aufgabe %><br />
-    <%= f.text_area :aufgabe %>
+    <%= f.text_area :aufgabe , :cols => 90, :rows => 20%>
   </div>
   <div class="field">
     <%= f.label :erklaerung %><br />
-    <%= f.text_area :erklaerung %>
-  </div>
-  <div class="field">
-    <%= f.label :information %><br />
-    <%= f.text_area :information %>
+    <%= text_area 'aufgabe', 'erklaerung', :cols => 20, :rows => 20  %></b>
   </div>
 
+  <div class="field">
+    <%= f.label :information %><br />
+     <%= text_area 'aufgabe', 'information' ,:cols => 125.95, :rows =>20 %>
+  </div>
+
+  <div class="field">
+    <%= f.label :erfasst %><br />
+    <%= f.text_field :erfasst , :size => 8%>
+  </div>
   <div class="field">
     <%= f.label :status %><br />
     <%= select( :aufgabe, :status,[ "In Arbeit", "Offen", "Erledigt", "Warte auf", "eingecheckt", "im Test", "zugewiesen", "zurueck gelegt"]
@@ -39,12 +41,12 @@
   </div>
   <div class="field">
     <%= f.label :erledigt_am %><br />
-    <%= f.text_field :erledigt_am %>
+    <%= f.text_field :erledigt_am, :size => 8%> 
   </div>
 
   <div class="field">
     <%= f.label :mantis_nummer %><br />
-    <%= f.text_field :mantis_nummer %>
+    <%= f.text_field :mantis_nummer ,:size => 4 %>
   </div>
   <div class="field">
     <%= f.label :privat %><br />
@@ -53,9 +55,13 @@
 
   <div class="field">
     <%= f.label :termin %><br />
-    <%= f.text_field :termin %>
+    <%= f.text_field :termin, :size => 8%>
   </div>
 
+  <div class="field">
+    <%= f.label :aufgabe_id %><br />
+    <%= text_field 'aufgabe', 'aufgabe_id' ,:size => 4 %>
+  </div>
   <div class="actions">
     <%= f.submit %>
   </div>
