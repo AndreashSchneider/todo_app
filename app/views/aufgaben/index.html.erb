@@ -27,8 +27,9 @@
     <td><%= link_to 'Destroy', aufgabe, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
-</table>
 
+</table>
+<%= will_paginate @aufgaben %>
 <br />
 
 
