@@ -3,7 +3,7 @@ class AufgabenController < ApplicationController
   # GET /aufgaben.xml
   helper_method :sort_column, :sort_direction 
   def index
-    @aufgaben = Aufgabe.order(sort_column + ' ' + sort_direction).paginate(:per_page => 3, :page =>params[:page]) 
+    @aufgaben = Aufgabe.search(params[:search]).order(sort_column + ' ' + sort_direction).paginate(:per_page => 2, :page =>params[:page]) 
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @aufgaben }
