@@ -35,12 +35,16 @@
 <% zaehl =0 %>
 <% @aufgaben.each do |aufgabe| %>
   <% zaehl = zaehl+1 %>
-  <tr class="<%= cycle("even","odd") %>">
-    <td><%= aufgabe.aufgabe[0...80].gsub("h4.","") %>
+  <tr  class="<%= cycle("even","odd") %>">
+
+    <td id="<%= 'zeig_aufgabe'+zaehl.to_s %>" >
+
+
+        <%= aufgabe.aufgabe[0...80].gsub("h4.","") %>
      <div class ="aufgabe" id="<%= 'aufgabe'+zaehl.to_s %>" style="position:absolute; 
-          max-width:600px; z-index:1;background- color:#E2E2E2;
+          max-width:600px; z-index:1;background-color:#E2E2E2;
           border: 1px solid #000000;left:10px;display:none">
-        <%= RedCloth.new('h4. '+aufgabe.aufgabe+' '+aufgabe.erklaerung).to_html+aufgabe.information %>
+        <%= RedCloth.new('h4. '+aufgabe.aufgabe+' '+aufgabe.erklaerung).to_html.html_safe+aufgabe.information %>
     </div>
     </td>
       
@@ -54,6 +58,12 @@
     <td><%= link_to 'Edit', edit_aufgabe_path(aufgabe) %></td>
     <td><%= link_to 'Destroy', aufgabe, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
+<script>
+jQuery(document).ready(function($) {
+	     $("#<%= 'zeig_aufgabe'+zaehl.to_s %>").click(function () {$("#<%= 'aufgabe'+zaehl.to_s %>").show("fast")});
+	     $("#<%= 'zeig_aufgabe'+zaehl.to_s %>").mouseleave(function () {$("#<%= 'aufgabe'+zaehl.to_s %>").hide("slow")});
+   });
+</script>
 <% end %>
 
 </table>
