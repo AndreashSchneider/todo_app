@@ -233,31 +233,29 @@ class AufgabenController < ApplicationController
              end
            end
          end
-         if params[:datum].to_s.length == 10 then 
-           if conditions.nil?
-              conditions= "strftime('%Y-%m-%d',erfasst) "+params[:erf_vergl]+" strftime('%Y-%m-%d','"+params[:datum].to_s+"'))" # mysql-variante
-                             
-           else
-              conditions= conditions+" and strftime('%Y-%m-%d',erfasst) "+params[:erf_vergl]+" strftime('%Y-%m-%d','"+params[:datum].to_s+"')" #mysql-Variante
-              # oracle variante " and erfasst > date('"+params[:datum].to_s+"','yyyy-mm-dd')"
-           end
-         end 
+        if params[:erfasst].to_s.length == 10 then 
+         if conditions.nil?
+            conditions= "( strftime('%d.%m.%Y',erfasst) "+params[:erf_vergl]+params[:erfasst].to_s+"')"
+         else
+            conditions= conditions+" and ( strftime('%d.%m.%Y',erfasst) "+params[:erf_vergl]+"'"+params[:erfasst].to_s+"')"       
+         end    
+       end  
         
-         if params[:termin].to_s.length == 10 then 
-           if conditions.nil?
-              conditions= "( strftime('%Y-%m-%d',termin) "+params[:termin_vergl]+" strftime('%Y-%m-%d','"+params[:termin].to_s+"'))"
-           else
-              conditions= conditions+" and ( strftime('%Y-%m-%d',termin) "+params[:termin_vergl]+" strftime('%Y-%m-%d','"+params[:termin].to_s+"'))"       
-           end    
-         end   
+        if params[:termin].to_s.length == 10 then 
+         if conditions.nil?
+            conditions= "( strftime('%d.%m.%Y',termin) "+params[:termin_vergl]+params[:termin].to_s+"')"
+         else
+            conditions= conditions+" and ( strftime('%d.%m.%Y',termin) "+params[:termin_vergl]+"'"+params[:termin].to_s+"')"       
+         end    
+       end    
                   
-         if params[:erledigt_am].to_s.length == 10 then 
-           if conditions.nil?
-              conditions= "( strftime('%Y-%m-%d',erledigt_am) "+params[:erledigt_vergl]+" strftime('%Y-%m-%d','"+params[:erledigt_am].to_s+"'))"
-           else
-              conditions= conditions+" and ( strftime('%Y-%m-%d',erledigt_am) "+params[:erledigt_vergl]+" strftime('%Y-%m-%d','"+params[:erledigt_am].to_s+"'))"       
-           end    
-         end   
+        if params[:erledigt_am].to_s.length == 10 then 
+         if conditions.nil?
+            conditions= "( strftime('%d.%m.%Y',erledigt_am) "+params[:erledigt_vergl]+params[:erledigt_am].to_s+"')"
+         else
+            conditions= conditions+" and ( strftime('%d.%m.%Y',erledigt_am) "+params[:erledigt_vergl]+"'"+params[:erledigt_am].to_s+"')"       
+         end    
+       end   
                
          if params[:mantis_nr].to_s.length > 3 then
            if conditions.nil? then
