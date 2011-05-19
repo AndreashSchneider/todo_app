@@ -8,6 +8,15 @@
     ['zugewiesen','zugewiesen'],['zurueck gelegt','zurueck gelegt'],['eingecheckt','eingecheckt']]),{ :multiple => true, :size =>3})  %>
    
      <%= select_tag "projekt[]", options_for_select( ( Projekt.find( :all , :order => 'title').collect{ |x| [ x.title, x.title ] } ) ),   { :multiple => true, :size =>3} %>
+     <td><%= select_tag("erf_vergl",options_for_select([['=','='],['>','>'],['<','<']]))  %></td> 
+     <%= text_field_tag :erfasst, params[:erfasst],:size => 7 %> 
+     <td><%= select_tag("termin_vergl",options_for_select([['=','='],['>','>'],['<','<']]))  %></td> 
+     <%= text_field_tag :termin, params[:termin],:size => 7 %> 
+     <td><%= select_tag("erledigt_vergl",options_for_select([['=','='],['>','>'],['<','<']]))  %></td> 
+     <%= text_field_tag :erledigt_am, params[:erledigt_am],:size => 7 %> 
+     <td><%= select_tag("bearbeitet_vergl",options_for_select([['=','='],['>','>'],['<','<']]))  %></td> 
+     <%= text_field_tag :zuletzt_bearbeitet, params[:zuletzt_bearbeitet],:size => 7 %> 
+
      <%= select_tag("aktuell",options_for_select([['alle','alle'],['Ja','J'],['Nein','N']]))  %>
      <%= select_tag("mantis",options_for_select([['alle','alle'],['Ja','J'],['Nein','N']]))  %>         
      <%= select_tag("privat",options_for_select([['Nein','N'],['Ja','J'],['alle','alle']]))  %>
@@ -57,7 +66,7 @@
     <td><%= link_to 'Show', aufgabe %></td>
     <td><%= link_to 'Edit', edit_aufgabe_path(aufgabe) %></td>
     <td><%= link_to 'Destroy', aufgabe, :confirm => 'Are you sure?', :method => :delete %></td>
-   <%if aufgabe.mantis_nummer then %>
+      <%if aufgabe.mantis_nummer then %>
      <td> <%= ('<a href=http://mantis.ikb.de/view.php?id='+aufgabe.mantis_nummer.to_s+' title="Mantis-aufrufen">'+aufgabe.mantis_nummer.to_s+'</a>').html_safe  %>  
      <% end %></td>
   </tr>
