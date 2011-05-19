@@ -57,6 +57,9 @@
     <td><%= link_to 'Show', aufgabe %></td>
     <td><%= link_to 'Edit', edit_aufgabe_path(aufgabe) %></td>
     <td><%= link_to 'Destroy', aufgabe, :confirm => 'Are you sure?', :method => :delete %></td>
+   <%if aufgabe.mantis_nummer then %>
+     <td> <%= ('<a href=http://mantis.ikb.de/view.php?id='+aufgabe.mantis_nummer.to_s+' title="Mantis-aufrufen">'+aufgabe.mantis_nummer.to_s+'</a>').html_safe  %>  
+     <% end %></td>
   </tr>
 <script>
 jQuery(document).ready(function($) {
