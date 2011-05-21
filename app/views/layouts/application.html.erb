@@ -10,8 +10,13 @@
    <title><%= yield :title %></title>  
  </head> 
 <body>
+  <section class="round">
+    <% flash.each do |key, value| %>
+      <div class="flash <%= key %>"><%= value %></div>
+    <% end %>
 
-  <%= yield %>
+    <%= yield %>
+  </section>
   <%= debug(params) if Rails.env.development? %>
 </body>
 </html>
