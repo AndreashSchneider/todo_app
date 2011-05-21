@@ -3,7 +3,7 @@ class AufgabenController < ApplicationController
   # GET /aufgaben.xml
   helper_method :sort_column, :sort_direction 
   def index
-    @aufgaben = Aufgabe.search(params[:search],get_suchbedingung).order(sort_column + ' ' + sort_direction).paginate(:per_page => 25, :page =>params[:page]) 
+    @aufgaben = Aufgabe.search(params[:search],get_suchbedingung,date_where).order(sort_column + ' ' + sort_direction).paginate(:per_page => 25, :page =>params[:page]) 
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @aufgaben }
@@ -233,21 +233,9 @@ class AufgabenController < ApplicationController
              end
            end
          end
-        if params[:erfasst].to_s.length == 10 then 
-         if conditions.nil?
-            conditions= "( strftime('%d.%m.%Y',erfasst) "+params[:erf_vergl]+params[:erfasst].to_s+"')"
-         else
-            conditions= conditions+" and ( strftime('%d.%m.%Y',erfasst) "+params[:erf_vergl]+"'"+params[:erfasst].to_s+"')"       
-         end    
-       end  
+   
         
-        if params[:termin].to_s.length == 10 then 
-         if conditions.nil?
-            conditions= "( strftime('%d.%m.%Y',termin) "+params[:termin_vergl]+params[:termin].to_s+"')"
-         else
-            conditions= conditions+" and ( strftime('%d.%m.%Y',termin) "+params[:termin_vergl]+"'"+params[:termin].to_s+"')"       
-         end    
-       end    
+
                   
         if params[:erledigt_am].to_s.length == 10 then 
          if conditions.nil?
@@ -266,4 +254,17 @@ class AufgabenController < ApplicationController
          end
          return conditions
      end
+
+     def date_where
+         bedingung =[]        
+       if params[:erfasst].to_s.length == 10 then 
+         bedingung =["date(erfasst) "+params[:erf_vergl]+" DATE(?)", params[:erfasst]]
+       end if
+       if params[:termin].to_s.length == 10 then 
+         bedingung <<["date(termin) "+params[:termin_vergl]+" DATE(?)", params[:termin]]
+       end if
+       p bedingung
+       bedingung
+     end
+
 end
