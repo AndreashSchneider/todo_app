@@ -1,4 +1,6 @@
 TodoApp::Application.routes.draw do
+  get "users/new"
+
   resources :projekte
 
   resources :aufgaben

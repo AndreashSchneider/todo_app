@@ -3,7 +3,7 @@ class Aufgabe < ActiveRecord::Base
      if search  
        # p "Datumseinschränkung #{datumseinschraenkung}"
        where(suchbedingung) #'aufgabe LIKE ?', "%#{search}%" 
-       where(datumseinschraenkung)       
+       where(datumseinschraenkung) # todo es wird nur die letzte 'where' ausgeführt !!  
      else  
        scoped  
      end  
