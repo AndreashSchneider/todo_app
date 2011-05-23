@@ -10,8 +10,9 @@ class UsersController < ApplicationController
   def create   
     @user= User.new(params[:user])
     if @user.save
-     flash[:success]=" Welcome to the TodoApp!"
-     redirect_to @user
+      sign_in @user 
+      flash[:success]=" Welcome to the TodoApp!"
+      redirect_to @user
     else
      @title = 'Sign up'
      render 'new'
