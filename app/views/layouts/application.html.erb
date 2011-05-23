@@ -7,18 +7,26 @@
   <%= csrf_meta_tag %>
    <%= stylesheet_link_tag "http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/redmond/jquery-ui.css", "application" %>  
    <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js", "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js", "application" %>  
+   <% render 'layouts/stylesheets' %>
    <title><%= yield :title %></title>  
  </head> 
 <body>
-  <%= render 'layouts/header' %>
+   <%= render 'layouts/header' %>
+<div class="container">
+  <%= image_tag("logo.png", :alt => "Todo App", :class => "round") %>
+  
   <section class="round">
+
     <% flash.each do |key, value| %>
       <div class="flash <%= key %>"><%= value %></div>
     <% end %>
-
     <%= yield %>
   </section>
+  
   <%= debug(params) if Rails.env.development? %>
+</div>
+<%= render 'layouts/footer' %>
+
 </body>
 </html>
 
