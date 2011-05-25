@@ -14,9 +14,7 @@
    <%= render 'layouts/header' %>
 <div class="container">
   <%= image_tag("logo.png", :alt => "Todo App", :class => "round") %>
-  
-  <section class="round">
-
+    <section class="round">
     <% flash.each do |key, value| %>
       <div class="flash <%= key %>"><%= value %></div>
     <% end %>

@@ -1,4 +1,5 @@
 class AufgabenController < ApplicationController
+ before_filter :authenticate #, :only=>[:edit, :update]
   # GET /aufgaben
   # GET /aufgaben.xml
   helper_method :sort_column, :sort_direction 
@@ -266,5 +267,8 @@ class AufgabenController < ApplicationController
        p bedingung
        bedingung
      end
-
+ private 
+   def authenticate 
+     deny_access unless signed_in?
+   end
 end
