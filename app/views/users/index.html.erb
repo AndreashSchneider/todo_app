@@ -5,6 +5,10 @@
   <% @users.each do |user| %>
     <li>
       <%= link_to user.name, user %>
+      <% if current_user.admin? %>
+      | <%= link_to "delete", user,:method => :delete, :confirm =>"sicher dat?",
+            :title => "Delete #{user.name}" %>
+      <% end %>
     </li>
   <% end %>
 </ul>
