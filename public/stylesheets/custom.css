@@ -4,6 +4,12 @@
 body {
   background: #cff;
 }
+ul.users {
+  margin-top: 1em;
+}
+.user li {
+  list-style: none;
+}
 footer {
   text-align : center;
   margin-top : 10 px;
