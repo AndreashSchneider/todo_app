@@ -4,7 +4,10 @@ class AufgabenController < ApplicationController
   # GET /aufgaben.xml
   helper_method :sort_column, :sort_direction 
   def index
-    @aufgaben = Aufgabe.search(params[:search],get_suchbedingung,date_where).order(sort_column + ' ' + sort_direction).paginate(:per_page => 25, :page =>params[:page]) 
+   # @aufgaben = Aufgabe.search(params[:search],get_suchbedingung,date_where).
+   #               order(sort_column + ' ' + sort_direction).paginate(:per_page => 25, :page =>params[:page]) 
+    @aufgaben = Aufgabe.search(suchbedingung).
+                order(sort_column + ' ' + sort_direction).paginate(:per_page => 25, :page =>params[:page]) 
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @aufgaben }
@@ -100,32 +103,9 @@ class AufgabenController < ApplicationController
      %w[asc desc].include?(params[:direction]) ?  params[:direction] : "asc"  
    end
    def get_suchbedingung
-          # Neue Suche mit mehreren Worten ##########################################	
-          suchstring="#{params[:search]}" unless params[:search].nil?
-          # String auseinanderbauen und % Zeichen einfügen
-          sArray= suchstring.split unless suchstring.nil? 
-          
-           suchen=''
-          unless sArray.nil? 
-          sArray.each {|begriff|
-            suchen = suchen+'%'+begriff
-                 }
-         verschl_suchen=' '
-         # das erste Prozentzeichen kann wegfallen, da schon im suchen enthalten
-         if suchstring.nil?
-           verschl_suchen=' '
-         else
-           verschl_suchen = suchen  
-         end
-         conditions = " ( upper(aufgabe) like upper('"+verschl_suchen.to_s.upcase+"%') 
-                       OR projekt like ('"+suchen+"%') 
-                       OR upper(information) like (upper('"+suchen+"%'))
-                       OR zustaendig like ('"+suchen+"%'))" unless params[:search].nil?
-           end                   
-         # Ende -Neue Suche mit mehreren Worten ##########################################
          
-         # mehrfach Auswahl von Status in Combobox auswerten
          
+         # mehrfach Auswahl von Status in Combobox auswerten      
          conditions2 =" upper(status) like upper('#{params[:status]}')" unless params[:status].nil?
          stati=''
          params[:status].each { |text| stati=stati+ ",'"+text+"'" } unless params[:status].nil?
@@ -153,119 +133,78 @@ class AufgabenController < ApplicationController
          end    
          
          
-         
-         # Private Projekte nicht automatisch anzeigen (nur explizit)    
-          unless params[:privat].nil? then 
-           unless params[:privat].to_s == 'alle'
-             if conditions.nil?      
-               conditions = " privat = '"+params[:privat].to_s+"'"
-             else 
-               conditions= conditions+" and privat = '"+params[:privat].to_s+"'"
-             end
-           else
-             nil
-           end 
-          else
-           if conditions.nil?      
-             conditions = " privat = 'N'"
-           else 
-             conditions= conditions+" and privat = 'N'"
-           end       
-          end
-            
-         # Information Projekt nicht automatisch anzeigen (nur explizit)  
-          unless params[:projekt].to_s=='Information' then 
-            if conditions.nil?      
-              conditions = "projekt <> 'Information'" 
-            else 
-              conditions= conditions+" AND projekt <> 'Information'" 
-            end
-          end 
+  
+
                  
-          # Protokolle nicht automatisch anzeigen (nur e otokoll'
-          unless params[:projekt].to_s=='Protokoll' then 
-            if conditions.nil?      
-              conditions = "projekt <> 'Protokoll'" 
-            else 
-              conditions= conditions+" AND projekt <> 'Protokoll'" 
-            end   
-          end
-          
-                  # Protokolle nicht automatisch anzeigen (nur e otokoll'
-          unless params[:projekt].to_s=='Ruby' then 
-            if conditions.nil?      
-              conditions = "projekt <> 'Ruby'" 
-            else 
-              conditions= conditions+" AND projekt <> 'Ruby'" 
-            end   
-          end
-              
-               
-         # nur die anzeigen die heute bearbeitet werden sollen (30.11.2007)
-         
-         if params[:aktuell]=='J' then 
-           if conditions.nil?
-            conditions ="heute_bearbeiten_kz ='J'"
-           else
-             conditions=  conditions+" and heute_bearbeiten_kz ='J'"
-           end
-         end   
 
-         if params[:aktuell]=='N' then 
-           if conditions.nil?
-            conditions ="heute_bearbeiten_kz ='N'"
-           else
-             conditions=  conditions+" and heute_bearbeiten_kz ='N'"
-           end
-         end          
-        
-         # außer wenn explizit gewünscht, die "Tagesinteressanten" an den
-         # folgenden Tagen ausblenden und von der Suche ausnehmen.
-         # unless params[:aktuell]=='alle u. unwichtige' then 
-         #   conditions = conditions+" and (nur_heute_interessant = 'N' OR status = 'Offen'
-         #                              OR (nur_heute_interessant= 'J' AND erfasst = date('now')))"
-         # end                           
-         unless params[:mantis].nil? 
-           unless params[:mantis]=='alle' then
-             if params[:mantis]=='J' then
-               conditions = conditions + " and mantis_nummer is not null"
-             else 
-               conditions = conditions + " and mantis_nummer is null "
-             end
-           end
-         end
-   
-        
 
-                  
-        if params[:erledigt_am].to_s.length == 10 then 
-         if conditions.nil?
-            conditions= "( strftime('%d.%m.%Y',erledigt_am) "+params[:erledigt_vergl]+params[:erledigt_am].to_s+"')"
-         else
-            conditions= conditions+" and ( strftime('%d.%m.%Y',erledigt_am) "+params[:erledigt_vergl]+"'"+params[:erledigt_am].to_s+"')"       
-         end    
-       end   
-               
-         if params[:mantis_nr].to_s.length > 3 then
-           if conditions.nil? then
-              conditions = "mantis_nummer = "+params[:mantis_nr].to_s
-           else 
-             conditions = conditions+" and mantis_nummer ="+ params[:mantis_nr].to_s 
-           end
-         end
-         return conditions
+         return conditions2
      end
+  
 
-     def date_where
-         bedingung =[]        
+
+     def suchbedingung
        if params[:erfasst].to_s.length == 10 then 
-         bedingung =["date(erfasst) "+params[:erf_vergl]+" DATE(?)", params[:erfasst]]
-       end if
+         bedingung =(bedingung||Aufgabe).where("date(erfasst) "+params[:erf_vergl]+" DATE(?)", params[:erfasst])
+       end
        if params[:termin].to_s.length == 10 then 
-         bedingung <<["date(termin) "+params[:termin_vergl]+" DATE(?)", params[:termin]]
-       end if
-       p bedingung
-       bedingung
+         bedingung =(bedingung||Aufgabe).where("date(termin) "+params[:termin_vergl]+" DATE(?)", params[:termin])
+       end
+       if params[:erledigt_am].to_s.length == 10 then 
+         bedingung =(bedingung||Aufgabe).where("date(erledigt_am) "+params[:erledigt_vergl]+" DATE(?)", params[:erledigt_am])
+       end 
+       if params[:zuletzt_bearbeitet].to_s.length == 10 then 
+         bedingung =(bedingung||Aufgabe).where("date(updated_at) "+params[:erledigt_vergl]+" DATE(?)
+                                                or date(erfasst) "+params[:erledigt_vergl]+" DATE(?)", 
+                                                params[:zuletzt_bearbeitet],params[:zuletzt_bearbeitet]
+                                                )
+       end 
+       if params[:mantis_nr].to_s.length > 3 then 
+         bedingung =(bedingung||Aufgabe).where("mantis_nummer = ?", params[:mantis_nr])
+       end
+       if params[:mantis]=='J' then
+         bedingung  =(bedingung||Aufgabe).where("mantis_nummer is not null")
+       elsif params[:mantis]=='N' then
+         bedingung  =(bedingung||Aufgabe).where("mantis_nummer is null")
+       end
+       # werden nur wenn angefordert angezeigt !
+       unless params[:projekt]=='Information' then 
+         bedingung  =(bedingung||Aufgabe).where("projekt <> 'Information'")
+       end
+       unless params[:projekt]=='Ruby' then 
+         bedingung  =(bedingung||Aufgabe).where("projekt <> 'Ruby'")
+       end
+       unless params[:projekt]=='Protokoll' then 
+         bedingung  =(bedingung||Aufgabe).where("projekt <> 'Protokoll'")
+       end
+       unless params[:privat]=='Alle' then 
+         bedingung  =(bedingung||Aufgabe).where("privat= ?",params[:privat])
+       end
+       suchstring="#{params[:search]}" unless params[:search].nil?
+       # String auseinanderbauen und % Zeichen einfügen
+       sArray= suchstring.split unless suchstring.nil? 
+       suchen=''
+       unless sArray.nil? 
+       sArray.each do |begriff|
+         suchen = suchen+'%'+begriff
+       end
+       verschl_suchen=' '
+       # das erste Prozentzeichen kann wegfallen, da schon im suchen enthalten
+       if suchstring.nil?
+         verschl_suchen=' '
+       else
+         verschl_suchen = suchen  
+       end         
+       bedingung  =(bedingung||Aufgabe).where("upper(aufgabe) like upper(:suchen)
+                             or projekt like (:suchen)
+                             or upper(information) like :suchen
+                             or zustaendig like :suchen",:suchen =>suchen+'%')
+
+       end
+       bedingung  =(bedingung||Aufgabe).where("status in (:stati) ",:stati => params[:status]) unless params[:status].nil?   
+
+
+        bedingung
      end
  private 
    def authenticate 

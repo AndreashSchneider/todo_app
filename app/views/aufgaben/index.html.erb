@@ -2,35 +2,60 @@
 <%= form_tag aufgaben_path, :method => 'get' do %> 
  <%= hidden_field_tag :direction, params[:direction] %>  
  <%= hidden_field_tag :sort, params[:sort] %>   
-   <p>  
- <%= select_tag("status[]",options_for_select([['Offen','Offen'],
-    ['Erledigt','Erledigt'],['Warte auf','Warte auf'],['In Arbeit','In Arbeit'],['im Test','im Test'],
-    ['zugewiesen','zugewiesen'],['zurueck gelegt','zurueck gelegt'],['eingecheckt','eingecheckt']]),{ :multiple => true, :size =>3})  %>
-   
-     <%= select_tag "projekt[]", options_for_select( ( Projekt.find( :all , :order => 'title').collect{ |x| [ x.title, x.title ] } ) ),   { :multiple => true, :size =>3} %>
-     <td><%= select_tag("erf_vergl",options_for_select([['=','='],['>','>'],['<','<']]))  %></td> 
-     <%= text_field_tag :erfasst, params[:erfasst],:size => 7 %> 
-     <td><%= select_tag("termin_vergl",options_for_select([['=','='],['>','>'],['<','<']]))  %></td> 
-     <%= text_field_tag :termin, params[:termin],:size => 7 %> 
-     <td><%= select_tag("erledigt_vergl",options_for_select([['=','='],['>','>'],['<','<']]))  %></td> 
-     <%= text_field_tag :erledigt_am, params[:erledigt_am],:size => 7 %> 
-     <td><%= select_tag("bearbeitet_vergl",options_for_select([['=','='],['>','>'],['<','<']]))  %></td> 
-     <%= text_field_tag :zuletzt_bearbeitet, params[:zuletzt_bearbeitet],:size => 7 %> 
 
-     <%= select_tag("aktuell",options_for_select([['alle','alle'],['Ja','J'],['Nein','N']]))  %>
-     <%= select_tag("mantis",options_for_select([['alle','alle'],['Ja','J'],['Nein','N']]))  %>         
-     <%= select_tag("privat",options_for_select([['Nein','N'],['Ja','J'],['alle','alle']]))  %>
-     <%= select_tag("report",options_for_select([['Nein','N'],['Ja','J']]))  %>   
-     <%= text_field_tag("mantis_nr",params['mantis_nr'],:size => 7) %> 
+ <tr>
+  <td> <%= select_tag("status[]",options_for_select([['Offen','Offen'],
+    ['Erledigt','Erledigt'],['Warte auf','Warte auf'],['In Arbeit','In Arbeit'],['im Test','im Test'],
+    ['zugewiesen','zugewiesen'],['zurueck gelegt','zurueck gelegt'],['eingecheckt','eingecheckt']]),{ :multiple => true, :size =>3})  %></td>
+
+    <td> <%= select_tag "projekt[]", options_for_select( ( Projekt.find( :all , :order => 'title').collect{ |x| [ x.title, x.title ] } ) ),   { :multiple => true, :size =>3} %></td>
+  </tr>
+<table>
+ <tr>
+   <th></th>
+   <th>erfasst</th>
+   <th></th>
+   <th>Termin</th>
+   <th></th>
+   <th>erledigt</th>
+   <th></th>
+   <th>bearbeitet</th>
+   <th>Mantis?</th>
+   <th>pr.</th>
+   <th>Report?</th>
+   <th>Mantis-Nr.</th>
+
+ </tr>
+
+  </tr>
+     <td><%= select_tag("erf_vergl",options_for_select([['=','='],['>','>'],['<','<']]))  %></td> 
+     <td><%= text_field_tag :erfasst, params[:erfasst],:size => 7 %> </td>
+     <td><%= select_tag("termin_vergl",options_for_select([['=','='],['>','>'],['<','<']]))  %></td> 
+     <td><%= text_field_tag :termin, params[:termin],:size => 7 %> </td>
+     <td><%= select_tag("erledigt_vergl",options_for_select([['=','='],['>','>'],['<','<']]))  %></td> 
+     <td><%= text_field_tag :erledigt_am, params[:erledigt_am],:size => 7 %> </td>
+     <td><%= select_tag("bearbeitet_vergl",options_for_select([['=','='],['>','>'],['<','<']]))  %></td> 
+     <td><%= text_field_tag :zuletzt_bearbeitet, params[:zuletzt_bearbeitet],:size => 7 %> </td>
+     <td><%= select_tag("mantis",options_for_select([['alle','alle'],['Ja','J'],['Nein','N']]))  %>  </td>       
+     <td><%= select_tag("privat",options_for_select([['Nein','N'],['Ja','J'],['alle','alle']]))  %></td>
+
+     <td><%= select_tag("report",options_for_select([['Nein','N'],['Ja','J']]))  %> </td>  
+     <td><%= text_field_tag("mantis_nr",params['mantis_nr'],:size => 7) %> </td>
    
-     <%= select_tag("sql",options_for_select([['Nein','N'],['Ja','J']]))  %>
-     <%= text_field_tag :search, params[:search] %>  
-     <%= submit_tag "Search", :name => nil %>  
+     <td><%= select_tag("sql",options_for_select([['Nein','N'],['Ja','J']]))  %></td>
+ </tr>
+</table>
+     <td><%= text_field_tag :search, params[:search] %></td>  
+     <td><%= submit_tag "Search", :name => nil %>  </td>
+</table>
    </p>  
+ </tr>
 <% end %>
 <%= link_to 'New Aufgabe', new_aufgabe_path %>
+ </tr>
 <table>
   <tr>
+
 <th><%= sortable "aufgabe" %></th>
 <th><%= sortable "erfasst" %></th>
 <th><%= sortable "projekt" %></th>
