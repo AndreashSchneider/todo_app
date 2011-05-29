@@ -48,7 +48,8 @@
      <td><%= text_field_tag :search, params[:search] %></td>  
      <td><%= submit_tag "Search", :name => nil %>  </td>
 </table>
-   </p>  
+   </p> 
+ <%= @aufgaben.total_entries %>
  </tr>
 <% end %>
 <%= link_to 'New Aufgabe', new_aufgabe_path %>
