@@ -4,9 +4,7 @@ class AufgabenController < ApplicationController
   # GET /aufgaben.xml
   helper_method :sort_column, :sort_direction 
   def index
-   # @aufgaben = Aufgabe.search(params[:search],get_suchbedingung,date_where).
-   #               order(sort_column + ' ' + sort_direction).paginate(:per_page => 25, :page =>params[:page]) 
-    @aufgaben = Aufgabe.search(suchbedingung).
+    @aufgaben = suchbedingung.
                 order(sort_column + ' ' + sort_direction).paginate(:per_page => 25, :page =>params[:page]) 
     respond_to do |format|
       format.html # index.html.erb
@@ -204,8 +202,9 @@ class AufgabenController < ApplicationController
        bedingung  =(bedingung||Aufgabe).where("status in (:stati) ",:stati => params[:status]) unless params[:status].nil?   
 
 
-        bedingung
+       bedingung
      end
+
  private 
    def authenticate 
      deny_access unless signed_in?
