@@ -2,7 +2,7 @@ class ProjekteController < ApplicationController
   # GET /projekte
   # GET /projekte.xml
   def index
-    @projekte = Projekt.all
+    @projekte = Projekt.where('user_id = ?',current_user.id)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -25,7 +25,7 @@ class ProjekteController < ApplicationController
   # GET /projekte/new.xml
   def new
     @projekt = Projekt.new
-
+    @projekt.user_id = current_user.id
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @projekt }

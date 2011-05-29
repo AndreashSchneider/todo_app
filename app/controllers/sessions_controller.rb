@@ -10,7 +10,11 @@ class SessionsController < ApplicationController
       render 'new'
     else
       sign_in user
-      redirect_to user
+      if user.projekte.blank? 
+        redirect_to :projekte, :notice => 'Please create a project first.'
+      else
+        redirect_to user
+      end
     end
   end
   def destroy

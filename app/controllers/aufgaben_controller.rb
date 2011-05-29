@@ -4,7 +4,7 @@ class AufgabenController < ApplicationController
   # GET /aufgaben.xml
   helper_method :sort_column, :sort_direction 
   def index
-    @aufgaben = suchbedingung.
+    @aufgaben = suchbedingung.    # liefert eine WHERE-CLAUSE !!
                 order(sort_column + ' ' + sort_direction).paginate(:per_page => 25, :page =>params[:page]) 
     respond_to do |format|
       format.html # index.html.erb
@@ -29,6 +29,7 @@ class AufgabenController < ApplicationController
   # GET /aufgaben/new.xml
   def new
     @aufgabe = Aufgabe.new
+    @aufgabe.user_id = current_user.id
     lov_projekte_fuellen
     respond_to do |format|
       format.html # new.html.erb
@@ -46,7 +47,9 @@ class AufgabenController < ApplicationController
   # POST /aufgaben.xml
   def create
     @aufgabe = Aufgabe.new(params[:aufgabe])
-
+    p "erstmal hier "
+    @aufgabe.user_id = current_user.id
+    p "hier bin ich #{@aufgabe.user_id}"
     respond_to do |format|
       if @aufgabe.save
         format.html { redirect_to(@aufgabe, :notice => 'Aufgabe was successfully created.') }
@@ -88,7 +91,7 @@ class AufgabenController < ApplicationController
 
   # Damit kann die Werteliste auch dynamisch gefüllt werden.
   def lov_projekte_fuellen
-    @projekte = Projekt.find(:all)
+    @projekte = Projekt.where("user_id = ?",current_user.id)
     @projektliste =[]
     @projekte.each {|proj| @projektliste << proj.title}
   end
@@ -98,7 +101,7 @@ class AufgabenController < ApplicationController
    end  
      
    def sort_direction  
-     %w[asc desc].include?(params[:direction]) ?  params[:direction] : "asc"  
+     %w[asc desc].include?(params[:direction]) ?  params[:direction] : "desc"  
    end
    def suchbedingung
      if params[:erfasst].to_s.length == 10 then 
@@ -135,7 +138,7 @@ class AufgabenController < ApplicationController
        bedingung  =(bedingung||Aufgabe).where("projekt <> 'Protokoll'")
      end
      unless params[:privat]=='Alle' then 
-       bedingung  =(bedingung||Aufgabe).where("privat= ?",params[:privat])
+       bedingung  =(bedingung||Aufgabe).where("privat= ?",params[:privat]) unless params[:privat].nil?
      end
      suchstring="#{params[:search]}" unless params[:search].nil?
      # String auseinanderbauen und % Zeichen einfügen
@@ -160,7 +163,7 @@ class AufgabenController < ApplicationController
      end
      bedingung  =(bedingung||Aufgabe).where("status in (:stati) ",:stati => params[:status]) unless params[:status].nil?   
      bedingung  =(bedingung||Aufgabe).where("projekt in (:projekte) ",:projekte => params[:projekt]) unless params[:projekt].nil? 
-
+     bedingung  =(bedingung||Aufgabe).where("user_id = ?", current_user.id)
      bedingung
    end
 

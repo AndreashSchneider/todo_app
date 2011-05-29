@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110528101445) do
+ActiveRecord::Schema.define(:version => 20110529135433) do
 
   create_table "aufgaben", :force => true do |t|
     t.date     "erfasst"
@@ -32,12 +32,14 @@ ActiveRecord::Schema.define(:version => 20110528101445) do
     t.integer  "reihenfolge"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
   end
 
   create_table "projekte", :force => true do |t|
     t.string   "title"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
   end
 
   create_table "users", :force => true do |t|

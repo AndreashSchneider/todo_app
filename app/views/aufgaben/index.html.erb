@@ -8,7 +8,7 @@
     ['Erledigt','Erledigt'],['Warte auf','Warte auf'],['In Arbeit','In Arbeit'],['im Test','im Test'],
     ['zugewiesen','zugewiesen'],['zurueck gelegt','zurueck gelegt'],['eingecheckt','eingecheckt']]),{ :multiple => true, :size =>3})  %></td>
 
-    <td> <%= select_tag "projekt[]", options_for_select( ( Projekt.find( :all , :order => 'title').collect{ |x| [ x.title, x.title ] } ) ),   { :multiple => true, :size =>3} %></td>
+    <td> <%= select_tag "projekt[]", options_for_select( ( Projekt.where( 'user_id = ?',current_user.id).collect{ |x| [ x.title, x.title ] } ) ),   { :multiple => true, :size =>3} %></td>
   </tr>
 <table>
  <tr>
@@ -50,6 +50,7 @@
 </table>
    </p> 
  <%= @aufgaben.total_entries %>
+  <%= current_user.name %>
  </tr>
 <% end %>
 <%= link_to 'New Aufgabe', new_aufgabe_path %>
