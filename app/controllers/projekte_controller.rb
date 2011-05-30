@@ -25,7 +25,6 @@ class ProjekteController < ApplicationController
   # GET /projekte/new.xml
   def new
     @projekt = Projekt.new
-    @projekt.user_id = current_user.id
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @projekt }
@@ -41,7 +40,7 @@ class ProjekteController < ApplicationController
   # POST /projekte.xml
   def create
     @projekt = Projekt.new(params[:projekt])
-
+    @projekt.user_id = current_user.id
     respond_to do |format|
       if @projekt.save
         format.html { redirect_to(@projekt, :notice => 'Projekt was successfully created.') }
