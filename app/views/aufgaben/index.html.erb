@@ -2,7 +2,7 @@
 <%= form_tag aufgaben_path, :method => 'get' do %> 
  <%= hidden_field_tag :direction, params[:direction] %>  
  <%= hidden_field_tag :sort, params[:sort] %>   
-
+<script> var $j = jQuery.noConflict(); </script>
  <tr>
   <td> <%= select_tag("status[]",options_for_select([['Offen','Offen'],
     ['Erledigt','Erledigt'],['Warte auf','Warte auf'],['In Arbeit','In Arbeit'],['im Test','im Test'],
@@ -98,9 +98,9 @@
      <% end %></td>
   </tr>
 <script>
-jQuery(document).ready(function($) {
-	     $("#<%= 'zeig_aufgabe'+zaehl.to_s %>").click(function () {$("#<%= 'aufgabe'+zaehl.to_s %>").show("fast")});
-	     $("#<%= 'zeig_aufgabe'+zaehl.to_s %>").mouseleave(function () {$("#<%= 'aufgabe'+zaehl.to_s %>").hide("slow")});
+$j(document).ready(function($j) {
+	     $j("#<%= 'zeig_aufgabe'+zaehl.to_s %>").click(function () {$j("#<%= 'aufgabe'+zaehl.to_s %>").show("fast")});
+	     $j("#<%= 'zeig_aufgabe'+zaehl.to_s %>").mouseleave(function () {$j("#<%= 'aufgabe'+zaehl.to_s %>").hide("slow")});
    });
 </script>
 <% end %>
