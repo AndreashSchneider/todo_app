@@ -2,16 +2,17 @@
 <%= form_tag aufgaben_path, :method => 'get' do %> 
  <%= hidden_field_tag :direction, params[:direction] %>  
  <%= hidden_field_tag :sort, params[:sort] %>   
-<script> var $j = jQuery.noConflict(); </script>
- <tr>
-  <td> <%= select_tag("status[]",options_for_select([['Offen','Offen'],
+<a href="#" id=button_detail_aus > <img class='links' src='/images/minus.jpeg' alt='' /></a>
+<a href="#" id=button_detail_ein > <img class='links' src='/images/plus.jpeg' alt='' /></a>
+
+ <tr id="status_projekt">
+  <td > <%= select_tag("status[]",options_for_select([['Offen','Offen'],
     ['Erledigt','Erledigt'],['Warte auf','Warte auf'],['In Arbeit','In Arbeit'],['im Test','im Test'],
     ['zugewiesen','zugewiesen'],['zurueck gelegt','zurueck gelegt'],['eingecheckt','eingecheckt']]),{ :multiple => true, :size =>3})  %></td>
-
     <td> <%= select_tag "projekt[]", options_for_select( ( Projekt.where( 'user_id = ?',current_user.id).collect{ |x| [ x.title, x.title ] } ) ),   { :multiple => true, :size =>3} %></td>
   </tr>
 <table>
- <tr>
+ <tr class="detail_suche">
    <th></th>
    <th>erfasst</th>
    <th></th>
@@ -28,7 +29,8 @@
  </tr>
 
   </tr>
-     <td><%= select_tag("erf_vergl",options_for_select([['=','='],['>','>'],['<','<']]))  %></td> 
+  <tr class="detail_suche">
+     <td ><%= select_tag("erf_vergl",options_for_select([['=','='],['>','>'],['<','<']]))  %></td> 
      <td><%= text_field_tag :erfasst, params[:erfasst],:size => 7 %> </td>
      <td><%= select_tag("termin_vergl",options_for_select([['=','='],['>','>'],['<','<']]))  %></td> 
      <td><%= text_field_tag :termin, params[:termin],:size => 7 %> </td>
@@ -92,7 +94,8 @@
 
     <td><%= link_to 'Show', aufgabe %></td>
     <td><%= link_to 'Edit', edit_aufgabe_path(aufgabe) %></td>
-    <td><%= link_to 'Destroy', aufgabe, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Destroy', aufgabe, :confirm => 'Are you sure?', :method => :delete %>
+</td>
       <%if aufgabe.mantis_nummer then %>
      <td> <%= ('<a href=http://mantis.ikb.de/view.php?id='+aufgabe.mantis_nummer.to_s+' title="Mantis-aufrufen">'+aufgabe.mantis_nummer.to_s+'</a>').html_safe  %>  
      <% end %></td>
