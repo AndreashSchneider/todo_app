@@ -4,8 +4,10 @@ class AufgabenController < ApplicationController
   # GET /aufgaben.xml
   helper_method :sort_column, :sort_direction 
   def index
+    @sql = params[:sql]
     @aufgaben = suchbedingung.    # liefert eine WHERE-CLAUSE !!
                 order(sort_column + ' ' + sort_direction).paginate(:per_page => 25, :page =>params[:page]) 
+     sql_darstellen unless ( @sql =='N' or @sql==nil?)
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @aufgaben }
@@ -167,6 +169,59 @@ class AufgabenController < ApplicationController
      bedingung
    end
 
+ def sql_darstellen
+    unless  @aufgaben==nil then 
+      @aufgaben.each do |aufgabe| 
+	       aufgabe.information= sqltext(aufgabe.information)
+	    end
+	  else
+	   unless @aufgabe==nil then
+	     @aufgabe.information= sqltext(@aufgabe.information)
+	   end
+	  end
+	end
+
+  # sql-Texte formatieren	
+  def sqltext (vcText)
+   wo1=''
+   line=''
+   farbe ='#0080c0'
+   zeilenumbruch='<br>'
+   a = ['like','set','select','for','from','update','where','group by', 'having', 'begin', 'end', 'if', 'null', 'declare',
+      'cursor', 'then', 'else', 'delete', 'insert', 'create', 'or', 'replace', 'and', 'join', 'in', 'on', 'exists', 'not', 'union', 'left',
+      'outer','return','order','by','nextval','desc','loop','elsif','boolean','between','on','close','function','procedure','is',
+      'open','fetch','into','%found','raise','exception','when','others','dual','commit',
+      # ab hier Forms typische
+      'go_block','execute_query',
+      # ab hier blassrosa !!
+      'to_number','to_date','trunc','to_char','varchar2','number','%type','ltrim','rpad',
+      'trunc','sysdate','view','force','asc','substr','count','nvl','decode','show_view','go_item','put_line','dbms_output',
+      'unless','find','params','each','do','save','ceil']
+   	vcText.each_line{|line| 
+   	  unless line[0..1]=='--' then  
+  	     a.each do |schl_wort|
+  	     	# muster besteht aus zwei Teile \1 und \2 =>(;?\s) -> heißt Semikolon eventuell, und ein Leerzeichen
+  	     	 muster=/\b(#{schl_wort})\b/i 	     	 	
+  	     	if schl_wort =='like' then farbe ="#0080c0"; end;
+  	      if schl_wort =='to_number' then farbe ="#ff8a8a"; end;
+  	       line.gsub!(muster,'<b><font color='+farbe+'>'+schl_wort.upcase+'</font></b>\2')
+  	       # Prozeduren, Funktionen und Packages markieren Achtung (.*?) ist nicht gierig !!
+           # (\(|\s) => heißt das bei Leerzeichen oder Klammer "(" schluss ist
+             muster2 =/(vw_.*?(\(|\s)|pk_.*?(\(|\s)|fk_.*?(\(|\s)|pr_.*?(\(|\s))/i	
+  	         line.gsub!(muster2) { '<b><font color="#FF8040">'+$1.upcase+'</font></b>' }
+  	      end
+  	  else # Kommentare Kursiv darstellen
+        line='<i><font color="#008000">'+line+'</font></i>'
+  	  end  	    	  
+  	  wo1=wo1+zeilenumbruch unless wo1==''
+  	  wo1=wo1+line
+	  }
+	  wo1 
+	  # führende Leerzeichen werden hier ersetzt, damit die Einrückung im Web sichtbar bleibt.
+	  pattern = /(^| )( +?)/
+    ersatz = '&nbsp;&nbsp;'
+    wo1 = wo1.gsub(pattern, ersatz).html_safe 
+  end
  private 
    def authenticate 
      deny_access unless signed_in?
