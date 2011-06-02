@@ -62,35 +62,33 @@
 
 <th><%= sortable "aufgabe" %></th>
 <th><%= sortable "erfasst" %></th>
-<th><%= sortable "projekt" %></th>
-<th><%= sortable "erledigt_am" %></th>
-<th><%= sortable "termin" %></th>
-<th><%= sortable "status" %></th>
-    <th></th>
+
+
     <th></th>
     <th></th>
   </tr>
 <% zaehl =0 %>
 <% @aufgaben.each do |aufgabe| %>
   <% zaehl = zaehl+1 %>
-  <tr  class="<%= cycle("even","odd") %>">
-
+  <%  mantis= ('<a href=http://mantis.ikb.de/view.php?id='+aufgabe.mantis_nummer.to_s+' title="Mantis-aufrufen">'+aufgabe.mantis_nummer.to_s+'</a>').html_safe if aufgabe.mantis_nummer %>
+  <tr  class="<%= cycle("even","odd") %>"; max-width:600px;>
     <td id="<%= 'zeig_aufgabe'+zaehl.to_s %>" >
-
-
         <%= aufgabe.aufgabe[0...80].gsub("h4.","") %>
      <div class ="aufgabe" id="<%= 'aufgabe'+zaehl.to_s %>" style="position:absolute; 
           max-width:600px; z-index:1;background-color:#E2E2E2;
-          border: 1px solid #000000;left:150px;display:none">
+          border: 1px solid #000000;left:140px;display:none">
         <%= RedCloth.new('h4. '+aufgabe.aufgabe+' '+aufgabe.erklaerung).to_html.html_safe+aufgabe.information %>
     </div>
     </td>
       
-    <td><%= aufgabe.erfasst %></td>
-    <td><%= aufgabe.projekt %></td>
-    <td><%= aufgabe.erledigt_am %></td>
-    <td><%= aufgabe.termin %></td>
-    <td><%= aufgabe.status %></td>
+    <td id="<%= 'zeig_erfasst'+zaehl.to_s %>">
+      <%= aufgabe.erfasst %>
+     <div class ="aufgabe" id="<%= 'erfasst'+zaehl.to_s %>" style="position:absolute; 
+          max-width:700px; z-index:1;background-color:#E2E2E2;
+          border: 1px solid #000000;left:850px;display:none">
+        <%= RedCloth.new("|Projekt|Erledigt-am|Termin|Status|Mantis|\n|#{aufgabe.projekt}|#{aufgabe.erledigt_am}|#{aufgabe.termin}|#{aufgabe.status}|#{mantis}").to_html.html_safe %>
+    </div>
+    </td>
     <td><%= link_to image_tag('/images/edit.jpeg'), edit_aufgabe_path(aufgabe) %></td>
     <td><%= link_to image_tag('/images/muell.jpeg'), aufgabe, :confirm => 'Are you sure?', :method => :delete %></td>
      <%if aufgabe.mantis_nummer then %>
@@ -101,6 +99,8 @@
 $j(document).ready(function($j) {
 	     $j("#<%= 'zeig_aufgabe'+zaehl.to_s %>").click(function () {$j("#<%= 'aufgabe'+zaehl.to_s %>").show("fast")});
 	     $j("#<%= 'zeig_aufgabe'+zaehl.to_s %>").mouseleave(function () {$j("#<%= 'aufgabe'+zaehl.to_s %>").hide("slow")});
+	     $j("#<%= 'zeig_erfasst'+zaehl.to_s %>").click(function () {$j("#<%= 'erfasst'+zaehl.to_s %>").show("fast")});
+	     $j("#<%= 'zeig_erfasst'+zaehl.to_s %>").mouseleave(function () {$j("#<%= 'erfasst'+zaehl.to_s %>").hide("slow")});
    });
 </script>
 <% end %>

@@ -190,7 +190,7 @@ class AufgabenController < ApplicationController
    a = ['like','set','select','for','from','update','where','group by', 'having', 'begin', 'end', 'if', 'null', 'declare',
       'cursor', 'then', 'else', 'delete', 'insert', 'create', 'or', 'replace', 'and', 'join', 'in', 'on', 'exists', 'not', 'union', 'left',
       'outer','return','order','by','nextval','desc','loop','elsif','boolean','between','on','close','function','procedure','is',
-      'open','fetch','into','%found','raise','exception','when','others','dual','commit',
+      'open','fetch','into','%found','raise','exception','when','others','dual','commit','minus',
       # ab hier Forms typische
       'go_block','execute_query',
       # ab hier blassrosa !!
