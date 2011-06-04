@@ -91,14 +91,14 @@
 
     </td>
     <td class="<%= even_odd %>" id="<%= 'zeig_mehr'+zaehl.to_s %>"> 
-     <%= link_to image_tag("#{aufgabe.status.gsub(' ','_').downcase}.jpeg"), edit_aufgabe_path(aufgabe) %>
+     <%= image_tag("#{aufgabe.status.gsub(' ','_').downcase}.jpeg") %>
   </tr>
 
     <script>
     $j(document).ready(function($j) {
 	         $j("#<%= 'zeig_aufgabe'+zaehl.to_s %>").click(function () {$j("#<%= 'aufgabe'+zaehl.to_s %>").show("fast")});
 	         $j("#<%= 'zeig_aufgabe'+zaehl.to_s %>").mouseleave(function () {$j("#<%= 'aufgabe'+zaehl.to_s %>").hide("slow")});
-	         $j("#<%= 'zeig_mehr'+zaehl.to_s %>").mouseenter(function () {$j("#<%= 'erfasst'+zaehl.to_s %>").show("fast")});
+	         $j("#<%= 'zeig_mehr'+zaehl.to_s %>").mousedown(function () {$j("#<%= 'erfasst'+zaehl.to_s %>").show("fast")});
 	         $j("#<%= 'zeig_aufgabe'+zaehl.to_s %>").mouseleave(function () {$j("#<%= 'erfasst'+zaehl.to_s %>").hide("slow")});
        });
     </script>
