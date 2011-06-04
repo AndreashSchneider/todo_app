@@ -8,6 +8,11 @@
     .odd  td {
       background-color: #fff !important;
     }
+img { color : #FFFFFF !important;
+      background-color: #FFFFFF !important;
+      border: none !important;
+}
+
 body {
   background: #cff;
 }

@@ -72,8 +72,8 @@
   <%  mantis= link_to "#{aufgabe.mantis_nummer}", "http://mantis.ikb.de/view.php?id=#{aufgabe.mantis_nummer}", :target => "#{aufgabe.mantis_nummer}" if aufgabe.mantis_nummer %>  
   <% muell= link_to image_tag('/images/muell.jpeg'), aufgabe, :confirm => 'Are you sure?', :method => :delete %>
   <% editieren= link_to image_tag('/images/edit.jpeg'), edit_aufgabe_path(aufgabe) %>
-
-  <tr  class="<%= cycle("even","odd") %>">
+  <% even_odd = cycle("even","odd") %>
+  <tr  class="<%= even_odd %>">
     <td id="<%= 'zeig_aufgabe'+zaehl.to_s %>" >
         <%= aufgabe.aufgabe[0...100].gsub("h4.","") %>
 
@@ -90,14 +90,15 @@
     </div>
 
     </td>
-    <td id="<%= 'zeig_mehr'+zaehl.to_s %>"><%= '...'%></td>
+    <td class="<%= even_odd %>" id="<%= 'zeig_mehr'+zaehl.to_s %>"> 
+     <%= link_to image_tag("#{aufgabe.status.gsub(' ','_').downcase}.jpeg"), edit_aufgabe_path(aufgabe) %>
   </tr>
 
     <script>
     $j(document).ready(function($j) {
 	         $j("#<%= 'zeig_aufgabe'+zaehl.to_s %>").click(function () {$j("#<%= 'aufgabe'+zaehl.to_s %>").show("fast")});
 	         $j("#<%= 'zeig_aufgabe'+zaehl.to_s %>").mouseleave(function () {$j("#<%= 'aufgabe'+zaehl.to_s %>").hide("slow")});
-	         $j("#<%= 'zeig_mehr'+zaehl.to_s %>").click(function () {$j("#<%= 'erfasst'+zaehl.to_s %>").show("fast")});
+	         $j("#<%= 'zeig_mehr'+zaehl.to_s %>").mouseenter(function () {$j("#<%= 'erfasst'+zaehl.to_s %>").show("fast")});
 	         $j("#<%= 'zeig_aufgabe'+zaehl.to_s %>").mouseleave(function () {$j("#<%= 'erfasst'+zaehl.to_s %>").hide("slow")});
        });
     </script>
