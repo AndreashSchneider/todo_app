@@ -1,6 +1,13 @@
+
 .container {
   width: 710px;
 }
+		.even td {
+      background-color: #eee !important;
+    }
+    .odd  td {
+      background-color: #fff !important;
+    }
 body {
   background: #cff;
 }
@@ -93,6 +100,7 @@ nav ul {
   margin: 0;
   padding:0;
 }
+
 
 nav ul li {
   list-style-type:none;
