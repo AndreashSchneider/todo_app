@@ -37,21 +37,29 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
   end
 
-  # POST /comments
-  # POST /comments.xml
-  def create
-    @comment = Comment.new(params[:comment])
-
-    respond_to do |format|
-      if @comment.save
-        format.html { redirect_to(@comment, :notice => 'Comment was successfully created.') }
-        format.xml  { render :xml => @comment, :status => :created, :location => @comment }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @comment.errors, :status => :unprocessable_entity }
+def create
+    $index = @index||0
+    farben =['0000ff','003300','FF69BF','9969BF','452E7B','330000','99B200','e9967a','5672FC','A50021','5F5F5F']
+    letzter_kommentar = Comment.last
+    unless letzter_kommentar.nil? then
+      if params[:neuer]=='1'       
+         $index = farben.index(letzter_kommentar.farbe)+1 unless letzter_kommentar.farbe.nil?
+      else 
+        $index = farben.index(letzter_kommentar.farbe) unless letzter_kommentar.farbe.nil?
       end
     end
-  end
+    @farbe = farben[$index]
+    p "farbe ist #{@farbe}"
+    @comment = Comment.create!(params[:comment])
+    @comment.body="<font color='##{@farbe}'>#{@comment.body} </font>"
+    @comment.farbe=@farbe
+    @comment.save
+   flash[:notice] = "Vielen Dank fuer Ihre Meinung!"
+   respond_to do |format|
+     format.html { redirect_to comments_path }
+     format.js
+   end
+ end
 
   # PUT /comments/1
   # PUT /comments/1.xml
@@ -69,15 +77,12 @@ class CommentsController < ApplicationController
     end
   end
 
-  # DELETE /comments/1
-  # DELETE /comments/1.xml
-  def destroy
+ def destroy
     @comment = Comment.find(params[:id])
     @comment.destroy
-
     respond_to do |format|
-      format.html { redirect_to(comments_url) }
-      format.xml  { head :ok }
+      format.html { redirect_to comments_path }
+      format.js
     end
   end
 end

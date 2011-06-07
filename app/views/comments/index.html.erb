@@ -1,29 +1,111 @@
-<h1>Listing comments</h1>
+<style type="text/css">
+div#center {
+	text-align: left;
+}
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Body</th>
-    <th>Category</th>
-    <th>Farbe</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+div#wrapper {
+	margin-left: auto;
+	margin-right: auto;
+	width:1218px;
 
-<% @comments.each do |comment| %>
-  <tr>
-    <td><%= comment.name %></td>
-    <td><%= comment.body %></td>
-    <td><%= comment.category %></td>
-    <td><%= comment.farbe %></td>
-    <td><%= link_to 'Show', comment %></td>
-    <td><%= link_to 'Edit', edit_comment_path(comment) %></td>
-    <td><%= link_to 'Destroy', comment, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
+}
+
+
+#main_content {
+	background-color: #E8CE96;
+	overflow: hidden;
+	border: 1px solid #333;
+}
+
+#Herausforderung {
+	float: left;
+	width: 300px;
+	padding-bottom: 32767px;
+	padding-left: 2px;
+	padding-right: 2px;
+	margin-bottom: -32767px;
+	background: #FFF4E5;
+	
+}
+
+#Loesung_Idee {
+	float: left;
+	width: 300px;
+	padding-bottom: 32767px;
+	padding-left: 2px;
+	padding-right: 2px;
+	margin-bottom: -32767px;
+	background: #FCF5E8;
+}
+
+#Bedenken_Einwaende {
+	float: left;
+	width: 300px;
+	padding-bottom: 32767px;
+	padding-left: 2px;
+	padding-right: 2px;	
+	margin-bottom: -32767px;
+	background: #F9F2D6;
+}
+
+#Information_Sichtweise {
+	float: right;
+	width: 299px;
+	padding-bottom: 32767px;
+	padding-left: 2px;
+	padding-right: 2px;	
+	margin-bottom: -32767px;
+	background: #FCF1D9;
+}
+ 
+</style>
+	<div id="center">
+		<div id="wrapper">
+
+			<div id="main_content">
+<div id="comment-notice"></div>
+<div id="Eingabe">
+<span id="comments_count"><%= pluralize(@comments.count, "Comment") %></span>
+<!-- <h3>Say something!</h3> -->
+<% form_for Comment.new, :remote => true do |f| %>
+<!-- <%= f.label :name, "Your name" %><br />
+<%= f.text_field :name %><br /> 
+<%= f.label :body, "Comment" %><br />-->
+  <%= f.text_area :body, :rows => 2 %><br />
+  <%= check_box_tag("neuer") %>
+  <%= radio_button("comment", "category", "Herausforderung") %>
+  <%= radio_button("comment", "category", "Loesung_Idee") %>
+  <%= radio_button("comment", "category", "Bedenken_Einwaende") %>
+  <%= radio_button("comment", "category", "Information_Sichtweise") %>
+  <%= f.submit "Was sagen.." %>
 <% end %>
-</table>
+</div>
 
-<br />
+<div id="comments" >
+<% herausforderung       = @comments.select do |satz| satz.category == 'Herausforderung' end %>
+<% loesungen             = @comments.select do |satz| satz.category == 'Loesung_Idee' end %>
+<% bedenken_einwaende    = @comments.select do |satz| satz.category == 'Bedenken_Einwaende' end %>
+<% information_Sichtweise= @comments.select do |satz| satz.category == 'Information_Sichtweise' end %>
+ <div id="Herausforderung" >
+   <h3>Herausforderung</h3>
+   <%= render :partial => :comments, :collection => herausforderung, :locals => { :list => true } %>
+ </div>   
+ <div id="Loesung_Idee" title="Lösung">
+<h3>Lösungen</h3>
+   <%= render :partial => :comments, :collection => loesungen, :locals => { :list => true } %>
+ </div> 
+ <div id="Bedenken_Einwaende" title="Bedenke" >
+  <h3>Bedenken</h3>
+   <%= render :partial => :comments, :collection => bedenken_einwaende, :locals => { :list => true } %>
+ </div> 
+ <div id="Information_Sichtweise" title="Information_Sichtweise">
+   <h3>Information/Sichtweisen</h3>
+   <%= render :partial => :comments, :collection => information_Sichtweise, :locals => { :list => true } %>
+ </div> 
+</div>
+				</div>
+		
+		</div>
+	</div>
 
-<%= link_to 'New Comment', new_comment_path %>
+

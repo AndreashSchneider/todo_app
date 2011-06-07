@@ -1,0 +1,24 @@
+/* Insert a notice between the last comment and the comment form */
+$j("#comment-notice").html('<div class="flash notice"><%= escape_javascript(flash.delete(:notice)) %></div>');
+
+/* Replace the count of comments */
+$j("#comments_count").html("<%= pluralize(Comment.count, 'Comment') %>");
+
+/* Ursprüngliche Version zum anhängen an comments */
+/* $("#comments").append("<%= escape_javascript(render(@comment)) %>");*/
+/* 1. Es wird nur der Kommentar an die richtige Kategorie gehangen */
+/* $("#<%= @comment.category %>").append("<%= @comment.body.html_safe %>");*/
+
+/* 2. Nun wird die View _comment an die Kategorie gehangen !! */
+$j("#<%= @comment.category %>").append("<%= escape_javascript(render(@comment)) %>");
+
+
+/*  Highlight the new comment */
+alert('#comment_<%= @comment.id %>');
+
+/* scheint zu funktioniere */
+/* $("#comment_<%= @comment.id %>").animate({"left": "-=50px"}, "slow"); */
+$j("#comment_<%= @comment.id %>").effect("highlight", {}, 3000);
+alert('#comment_<%= @comment.id %>');
+/* Reset the comment form */
+$j("#new_comment")[0].reset(); 

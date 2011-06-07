@@ -4,14 +4,28 @@
     $(function (){  
         $j('#aufgabe_erfasst,#aufgabe_erledigt_am,#aufgabe_termin,#erfasst,#erledigt_am,#termin,#zuletzt_bearbeitet').datepicker({ dateFormat: 'yy-mm-dd'});  
     });  
-// Detailsuche  Ein-/Ausblenden
-var $j = jQuery.noConflict();
-//jQuery(document).ready(function ($){
-//  $j(".detail_suche").hide("fast");$j("#button_detail_aus").hide("fast")
-//  $j("#button_detail_aus").click(function () {$j(".detail_suche").hide("fast"); $j("#button_detail_aus").hide("fast"); $j("#button_detail_ein").show("fast"); });
- // $j("#button_detail_ein").click(function () {$j(".detail_suche").show("fast"); $j("#button_detail_ein").hide("fast"); $j("#button_detail_aus").show("fast"); });
-//   });;
 
+var $j = jQuery.noConflict();
+
+$j(function() {
+  $j(".alert").click(function() {
+    alert(this.getAttribute("data-confirm"));
+    return false;
+  })
+})
+
+
+jQuery.fn.submitLinkWithAjax = function() {
+  this.live("click", function() {
+    $j.post(this.href, "_method=delete", null, "script");
+    return false;
+  });
+  return this;
+};
+
+$j(document).ready(function() {
+  $j("a.delete_post").submitLinkWithAjax();
+});
 
         
 
