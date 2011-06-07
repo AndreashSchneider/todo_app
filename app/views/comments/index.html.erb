@@ -12,7 +12,7 @@ div#wrapper {
 
 
 #main_content {
-	background-color: #E8CE96;
+	background-color: #0099CC;
 	overflow: hidden;
 	border: 1px solid #333;
 }
@@ -57,12 +57,12 @@ div#wrapper {
 	margin-bottom: -32767px;
 	background: #FCF1D9;
 }
- 
+textarea {
+   height: 75px;
+    padding: 5px;
+    width: 390px;
+ }
 </style>
-	<div id="center">
-		<div id="wrapper">
-
-			<div id="main_content">
 <div id="comment-notice"></div>
 <div id="Eingabe">
 <span id="comments_count"><%= pluralize(@comments.count, "Comment") %></span>
@@ -71,7 +71,7 @@ div#wrapper {
 <!-- <%= f.label :name, "Your name" %><br />
 <%= f.text_field :name %><br /> 
 <%= f.label :body, "Comment" %><br />-->
-  <%= f.text_area :body, :rows => 2 %><br />
+  <%= f.text_area :body, :rows => 2, :height => 125 %><br />
   <%= check_box_tag("neuer") %>
   <%= radio_button("comment", "category", "Herausforderung") %>
   <%= radio_button("comment", "category", "Loesung_Idee") %>
@@ -80,6 +80,11 @@ div#wrapper {
   <%= f.submit "Was sagen.." %>
 <% end %>
 </div>
+	<div id="center">
+		<div id="wrapper">
+
+			<div id="main_content">
+
 
 <div id="comments" >
 <% herausforderung       = @comments.select do |satz| satz.category == 'Herausforderung' end %>

@@ -14,11 +14,11 @@ $j("#<%= @comment.category %>").append("<%= escape_javascript(render(@comment)) 
 
 
 /*  Highlight the new comment */
-alert('#comment_<%= @comment.id %>');
+/*alert('#comment_<%= @comment.id %>');*/ 
 
 /* scheint zu funktioniere */
 /* $("#comment_<%= @comment.id %>").animate({"left": "-=50px"}, "slow"); */
 $j("#comment_<%= @comment.id %>").effect("highlight", {}, 3000);
-alert('#comment_<%= @comment.id %>');
+/*alert('#comment_<%= @comment.id %>');*/
 /* Reset the comment form */
 $j("#new_comment")[0].reset(); 
