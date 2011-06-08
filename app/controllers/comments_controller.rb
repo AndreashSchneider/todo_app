@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+before_filter :authenticate
   # GET /comments
   # GET /comments.xml
   def index
@@ -85,4 +86,8 @@ def create
       format.js
     end
   end
+private 
+   def authenticate 
+     deny_access unless signed_in?
+   end
 end
