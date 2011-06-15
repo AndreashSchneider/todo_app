@@ -161,7 +161,7 @@ a.popup {
 #header {
   height: 140px;
   padding: 40px 0;
-  background: url("../Makalu Interactive-Dateien/header.pn") no-repeat 50% 120px; }
+  background: url("../images/header.pn") no-repeat 50% 120px; }
   #header h1 {
     position: relative;
     top: -7px; }
@@ -171,7 +171,7 @@ a.popup {
       height: 130px;
       margin: 0 auto;
       text-indent: -9999px;
-      background: url("../Makalu Interactive-Dateien/logo.png") no-repeat 50% 50%;  }
+      background: url("../images/logo2.png") no-repeat 50% 50%;  }
 
 #intro {
   height: 140px;
@@ -262,7 +262,7 @@ a.popup {
       margin-top: -25px;
       text-indent: -9999px;
       outline: none;
-      background: url("../Makalu Interactive-Dateien/arrow.png") no-repeat left top; }
+      background: url("../images/arrow.png") no-repeat left top; }
       #case-studies .case-study .arrow:hover {
         opacity: 1;
         filter: alpha(opacity= 100 ); }
