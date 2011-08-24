@@ -1,0 +1,49 @@
+<%= form_for(@karte) do |f| %>
+  <% if @karte.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@karte.errors.count, "error") %> prohibited this karte from being saved:</h2>
+
+      <ul>
+      <% @karte.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :anl_dat %><br />
+    <%= f.date_select :anl_dat %>
+  </div>
+  <div class="field">
+    <%= f.label :aend_dat %><br />
+    <%= f.date_select :aend_dat %>
+  </div>
+  <div class="field">
+    <%= f.label :question %><br />
+    <%= f.text_area :question %>
+  </div>
+  <div class="field">
+    <%= f.label :answer %><br />
+    <%= f.text_area :answer %>
+  </div>
+  <div class="field">
+    <%= f.label :sparte %><br />
+    <%= f.text_field :sparte %>
+  </div>
+  <div class="field">
+    <%= f.label :folder %><br />
+    <%= f.text_field :folder %>
+  </div>
+  <div class="field">
+    <%= f.label :kapitel %><br />
+    <%= f.text_field :kapitel %>
+  </div>
+  <div class="field">
+    <%= f.label :not_known_today %><br />
+    <%= f.text_field :not_known_today %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

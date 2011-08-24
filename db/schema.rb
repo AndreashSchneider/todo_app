@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110607165908) do
+ActiveRecord::Schema.define(:version => 20110824091600) do
 
   create_table "aufgaben", :force => true do |t|
     t.date     "erfasst"
@@ -40,6 +41,19 @@ ActiveRecord::Schema.define(:version => 20110607165908) do
     t.text     "body"
     t.string   "category"
     t.string   "farbe"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "kartei", :force => true do |t|
+    t.date     "anl_dat"
+    t.date     "aend_dat"
+    t.text     "question"
+    t.text     "answer"
+    t.string   "sparte"
+    t.integer  "folder"
+    t.integer  "kapitel"
+    t.string   "not_known_today"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

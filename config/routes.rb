@@ -1,4 +1,6 @@
 TodoApp::Application.routes.draw do
+  resources :kartei
+
   resources :comments
 
   get "pages/home"

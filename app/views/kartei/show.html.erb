@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Anl dat:</b>
+  <%= @karte.anl_dat %>
+</p>
+
+<p>
+  <b>Aend dat:</b>
+  <%= @karte.aend_dat %>
+</p>
+
+<p>
+  <b>Question:</b>
+  <%= @karte.question %>
+</p>
+
+<p>
+  <b>Answer:</b>
+  <%= @karte.answer %>
+</p>
+
+<p>
+  <b>Sparte:</b>
+  <%= @karte.sparte %>
+</p>
+
+<p>
+  <b>Folder:</b>
+  <%= @karte.folder %>
+</p>
+
+<p>
+  <b>Kapitel:</b>
+  <%= @karte.kapitel %>
+</p>
+
+<p>
+  <b>Not known today:</b>
+  <%= @karte.not_known_today %>
+</p>
+
+
+<%= link_to 'Edit', edit_karte_path(@karte) %> |
+<%= link_to 'Back', kartei_path %>

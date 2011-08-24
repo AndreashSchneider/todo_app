@@ -1,0 +1,21 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  anl_dat: 2011-08-24
+  aend_dat: 2011-08-24
+  question: MyText
+  answer: MyText
+  sparte: MyString
+  folder: 
+  kapitel: 
+  not_known_today: 
+
+two:
+  anl_dat: 2011-08-24
+  aend_dat: 2011-08-24
+  question: MyText
+  answer: MyText
+  sparte: MyString
+  folder: 
+  kapitel: 
+  not_known_today: 

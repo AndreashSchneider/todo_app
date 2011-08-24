@@ -1,0 +1,37 @@
+<h1>Listing kartei</h1>
+
+<table>
+  <tr>
+    <th>Anl dat</th>
+    <th>Aend dat</th>
+    <th>Question</th>
+    <th>Answer</th>
+    <th>Sparte</th>
+    <th>Folder</th>
+    <th>Kapitel</th>
+    <th>Not known today</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @kartei.each do |karte| %>
+  <tr>
+    <td><%= karte.anl_dat %></td>
+    <td><%= karte.aend_dat %></td>
+    <td><%= karte.question %></td>
+    <td><%= karte.answer %></td>
+    <td><%= karte.sparte %></td>
+    <td><%= karte.folder %></td>
+    <td><%= karte.kapitel %></td>
+    <td><%= karte.not_known_today %></td>
+    <td><%= link_to 'Show', karte %></td>
+    <td><%= link_to 'Edit', edit_karte_path(karte) %></td>
+    <td><%= link_to 'Destroy', karte, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Karte', new_karte_path %>
