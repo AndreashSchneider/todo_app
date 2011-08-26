@@ -9,7 +9,41 @@ class KarteiController < ApplicationController
       format.xml  { render :xml => @kartei }
     end
   end
-
+def list2
+    
+    
+    if params[:sparte].nil? 
+     conditions = " sparte ='Entscheidungsvorlage'"
+    else
+     conditions = " sparte in ('"+params[:sparte]+"')"
+    end
+     conditions.gsub!("''","'") unless conditions.nil?
+    unless params[:vergleich].nil? then conditions =conditions+ "  AND (folder) "+params[:vergleich]; end
+    unless params[:folder].nil? then conditions = conditions+" ('#{params[:folder]}')";  end
+    
+    # Neue Suche mit mehreren Worten ##########################################	
+     suchstring="#{params[:query]}" unless params[:query].nil?
+     # String auseinanderbauen und % Zeichen einfügen
+     sArray= suchstring.split unless suchstring.nil? 
+     
+      suchen=''
+     unless sArray.nil? 
+       sArray.each {|begriff|
+         suchen = suchen+'%'+begriff
+              }
+       
+       # das erste Prozentzeichen kann wegfallen, da schon im suchen enthalten
+       conditions = conditions+ "AND ( upper(question) like upper('"+suchen+"%') OR upper(answer) like ('"+suchen+"%') )" unless params[:query].nil?
+     end                   
+    
+    # Ende -Neue Suche mit mehreren Worten ##########################################
+    @total = Karte.count(:conditions => conditions)    
+    @kartei = Karte.find(:all,:conditions =>conditions, :order=>'folder' )
+    
+    if request.xml_http_request? 
+      render :partial=> "kartei_list", :layout=> false
+    end	
+  end
   # GET /kartei/1
   # GET /kartei/1.xml
   def show

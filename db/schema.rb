@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110824091600) do
+ActiveRecord::Schema.define(:version => 20110824120743) do
 
   create_table "aufgaben", :force => true do |t|
     t.date     "erfasst"
@@ -73,6 +73,11 @@ ActiveRecord::Schema.define(:version => 20110824091600) do
     t.string   "encrypted_password"
     t.string   "salt"
     t.boolean  "admin"
+  end
+
+  create_table "vw_vokabelns", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

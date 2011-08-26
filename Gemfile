@@ -4,7 +4,7 @@ source 'http://rubygems.org'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
-
+gem 'jquery-rails', '>= 1.0.12'
 gem 'sqlite3'
 gem 'will_paginate','3.0.pre2' 
 gem 'RedCloth' 

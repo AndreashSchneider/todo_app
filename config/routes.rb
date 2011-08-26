@@ -1,4 +1,6 @@
 TodoApp::Application.routes.draw do
+  resources :vw_vokabelns
+
   resources :kartei
 
   resources :comments
