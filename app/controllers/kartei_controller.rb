@@ -102,7 +102,39 @@ def list2
       end
     end
   end
+  def edit_richtig
+    # Test
+     p 'hier in Kartei->Edit: '+params[:id].to_s
+    @karte = Karte.find(params[:id])
+    # 27.04.2007 Nur dann ein Datum eintragen, wenn die Frage nicht heute bereits 
+    # herab gestuft wurde !! Diese kann damit mehrmals am Tag entsprechend dem Folder 
+    # an die Reihe kommen.
+    # p 'Heute ?'+@karte.not_known_today  # läuft auf einen Fehler, daher auskommentiert 02.02.2009
+      if @karte.not_known_today == 'N' then 
+        @karte.folder= @karte.folder.to_i+1 
+        # aktuelle Zeit
+        t1=Time.now
+        # ohne Sekunden
+        t2= Time.mktime( t1.year, t1.month, t1.day)
+        p 't2 vor umwandlung '+t2.to_s
+        # zurück in die Zukunft !!       
+        t2= t2-126230400 # 126144000+86400= 126230400 94608000 
+        p 'Insert-Time '+t2.to_s
+        @karte.aend_dat=t2
+      else 
+        @karte.not_known_today = 'N'
+        @karte.folder= @karte.folder.to_i+1
+      end
+      @karte.save
+      p 'Folder ist jetzt: '+@karte.folder.to_s
+       # render(:partial => '/vw_vokabelns/vw_vokabeln', :actions => 'vw_vokabelns/index', :controller => "vw_vokabelns")
+       render :nothing => true
 
+#   respond_to do |format|
+#     format.html { redirect_to vw_vokabelns_path }
+#     format.js { redirect_to vw_vokabelns_path }
+#   end
+  end
   # DELETE /kartei/1
   # DELETE /kartei/1.xml
   def destroy

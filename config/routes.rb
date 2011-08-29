@@ -2,7 +2,7 @@ TodoApp::Application.routes.draw do
   resources :vw_vokabelns
 
   resources :kartei
-
+  match '/edit_richtig',:to => 'kartei#edit_richtig'
   resources :comments
 
   get "pages/home"

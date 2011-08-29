@@ -67,7 +67,7 @@ textarea {
 <div id="Eingabe">
 <span id="comments_count"><%= pluralize(@comments.count, "Comment") %></span>
 <!-- <h3>Say something!</h3> -->
-<% form_for Comment.new, :remote => true do |f| %>
+<%= form_for Comment.new, :remote => true do |f| %>
 <!-- <%= f.label :name, "Your name" %><br />
 <%= f.text_field :name %><br /> 
 <%= f.label :body, "Comment" %><br />-->
