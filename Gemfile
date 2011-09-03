@@ -8,6 +8,8 @@ gem 'jquery-rails', '>= 1.0.12'
 gem 'sqlite3'
 gem 'will_paginate','3.0.pre2' 
 gem 'RedCloth' 
+gem 'prawn'
+
 # Use unicorn as the web server
 # gem 'unicorn'
 
