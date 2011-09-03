@@ -3,6 +3,7 @@ TodoApp::Application.routes.draw do
 
   resources :kartei
   match '/edit_richtig',:to => 'kartei#edit_richtig'
+  match '/edit_falsch',:to => 'kartei#edit_falsch'
   resources :comments
 
   get "pages/home"

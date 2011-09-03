@@ -127,14 +127,30 @@ def list2
       end
       @karte.save
       p 'Folder ist jetzt: '+@karte.folder.to_s
-       # render(:partial => '/vw_vokabelns/vw_vokabeln', :actions => 'vw_vokabelns/index', :controller => "vw_vokabelns")
-       render :nothing => true
+      render :nothing => true
 
 #   respond_to do |format|
 #     format.html { redirect_to vw_vokabelns_path }
 #     format.js { redirect_to vw_vokabelns_path }
 #   end
   end
+
+ def edit_falsch
+    # Test
+    # p 'hier in Kartei->Edit_falsch'+params[:id].to_s
+    @karte = Karte.find(params[:id])
+    
+    # Bei falscher Antwort bleibt das Datum, damit die Frage bald wieder dran kommt!
+    # @karte.aend_dat=(Time.now-94608000)
+    @karte.not_known_today = 'J'
+    
+    @karte.folder= @karte.folder.to_i-1 unless @karte.folder.to_i==0
+    # Test
+     p 'Folder ->Edit_falsch ist jetzt: '+@karte.folder.to_s
+    @karte.save
+    render :nothing => true 
+  end
+
   # DELETE /kartei/1
   # DELETE /kartei/1.xml
   def destroy

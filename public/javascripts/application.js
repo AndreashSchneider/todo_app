@@ -13,12 +13,20 @@ var $j = jQuery.noConflict();
 //    return false;
 //  })
 //})
+
 $j(function (){  
   $j('.voki_radio_richtig').change(function() {
     $j.post('http://localhost:3000/edit_richtig?id='+this.getAttribute('name'), "_method=edit_richtig", null, "script");
     return false;
   });
-  return this;
+
+  });
+
+$j(function (){  
+  $j('.voki_radio_falsch').change(function() {
+    $j.post('http://localhost:3000/edit_falsch?id='+this.getAttribute('name'), "_method=edit_falsch", null, "script");
+    return false;
+  });
   });
 //jQuery.fn.submitLinkWithAjax = function() {
 //  this.live("click", function() {
