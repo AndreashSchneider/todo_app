@@ -1,0 +1,83 @@
+
+<table>
+<% n =rand*3 %>
+<% if n.nil? then n = 0 end %>
+<% n= n.round %>
+<% antwort1 = 0 %>
+<% antwort2 = 0 %>
+<% antwort3 = 0 %>
+<% runde = 0 %>
+<% not_known_today1 ='' %>
+<% unless @vw_vokabelns.nil? then %>
+<% for vw_vokabeln in @vw_vokabelns %>
+  <% if n==0 then %>
+   <% n=1 %>
+  <% end %>
+  <tr>
+  <% 3.times { %>
+  <% if n==4 then %>
+    <% n=1 %>
+  <% end %>
+  <% runde = runde+1 %>
+    
+  <% if  runde==1 then %>
+  <tr>
+    <% if vw_vokabeln.not_known_today1 == 'J' then not_known_today1 ='!'; end; %>
+    <td><%=h vw_vokabeln.geloest.to_s+' '+vw_vokabeln.sparte1+' Kap.:'+vw_vokabeln.kapitel1.to_s+' Fol.:'+vw_vokabeln.folder1.to_s+'> '+
+        vw_vokabeln.question1 %></td>       
+    <td><%=radio_button_tag(vw_vokabeln.id.to_s,"ja",false,{  :id => "nix", :remote=>:true	}) %></td>
+    <td><%= link_to image_tag("glb0s100.gif", :border=>0), :action => 'edit', :controller => 'kartei', :id => vw_vokabeln.id %> </td>  
+    <tr>
+    </tr>
+  </tr>   
+  <% end %>       
+ 
+    <% if  n==1 then %>       
+      <% if  antwort1==0 then %>    
+        <hr width=100%>        
+        <tr>       
+        <td><%= vw_vokabeln.answer1%></td>
+        <td><%=radio_button_tag(vw_vokabeln.id.to_s,"ja",false, {:id => "button_richtig"	,:class=>'voki_radio_richtig'}) %></td>   
+         <td><%= link_to 'x',{:controller=>:kartei, :action => :edit_richtig, :id=>vw_vokabeln.id}, :remote => true %> </td>          
+        </tr>                                                                    
+        <% n=n+1 %>
+        <% antwort1=antwort1+1 %>
+      <% end %> 
+    <% end %>   
+ 
+    <% if  n==2  then %>   
+      <% if  antwort2==0 then %>   
+        <hr width=100%>           
+        <tr>
+          <td><%= vw_vokabeln.answer2%></td>
+          <td><%=radio_button_tag(vw_vokabeln.id.to_s,"ja",false, {:id => "button_falsch"	,:class=>'voki_radio_falsch'}) %></td>
+        </tr>
+        <% n=n+1 %>
+        <% antwort2=antwort2+1 %>
+      <% end %> 
+    <% end %> 
+    <% if n==3 then %>  
+      <% if  antwort3==0 then %>
+        <hr width=100%>        
+        <tr>
+          <td><%= vw_vokabeln.answer3%></td>
+          <td><%=radio_button_tag(vw_vokabeln.id.to_s,"ja",false,{:id => "button_falsch",:class=>'voki_radio_falsch'	}) %></td>
+        </tr>
+        <% n=n+1 %>
+        <% antwort3=antwort3+1 %>       
+      <% end %> 
+    <% end %> 
+  <% } %>
+   
+
+</tr>
+
+</table>
+
+<%= image_tag "smilie_winkend.gif",:id => "smilie_richtig",:style => "display:none", :align => "top"%> 
+<%= image_tag "smilie_traurig.gif",:id => "smilie_falsch",:style => "display:none", :align => "top" %>          
+              
+
+
+<% end %> 
+<% end %>

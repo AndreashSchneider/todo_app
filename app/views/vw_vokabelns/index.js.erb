@@ -1,0 +1,5 @@
+$("#vokabels").html("<%= escape_javascript(render(@vw_vokabelns))%>");  
+ $j('.voki_radio_richtig').change(function() {
+    $j.post('http://localhost:3000/edit_richtig?id='+this.getAttribute('name'), "_method=edit_richtig", null, "script");
+      });
+ 

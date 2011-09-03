@@ -1,0 +1,17 @@
+<%= form_for(@vw_vokabeln) do |f| %>
+  <% if @vw_vokabeln.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@vw_vokabeln.errors.count, "error") %> prohibited this vw_vokabeln from being saved:</h2>
+
+      <ul>
+      <% @vw_vokabeln.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
