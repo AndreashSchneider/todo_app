@@ -87,15 +87,15 @@ textarea {
 
 
 <div id="comments" >
-<% herausforderung       = @comments.select do |satz| satz.category == 'Herausforderung' end %>
-<% loesungen             = @comments.select do |satz| satz.category == 'Loesung_Idee' end %>
-<% bedenken_einwaende    = @comments.select do |satz| satz.category == 'Bedenken_Einwaende' end %>
-<% information_Sichtweise= @comments.select do |satz| satz.category == 'Information_Sichtweise' end %>
+<% herausforderung       = @comments.select do |satz| satz.category == 'Herausforderung' end.
+                              sort_by{|comment|comment.id} %> %>
+<% loesungen             = @comments.select do |satz| satz.category == 'Loesung_Idee' end.
+                              sort_by{|comment|comment.id} %>
+<% bedenken_einwaende    = @comments.select do |satz| satz.category == 'Bedenken_Einwaende' end.
+                              sort_by{|comment|comment.id} %> %>
+<% information_Sichtweise= @comments.select do |satz| satz.category == 'Information_Sichtweise' end.
+                              sort_by{|comment|comment.id} %> %>
 <!-- und noch jeweils sortieren nach der id -->
-<% [herausforderung,loesungen,bedenken_einwaende,information_Sichtweise].each do |ergebnis|
-   ergebnis = ergebnis.sort_by{|comment|comment.id}
-  end
-%>
   
 
 
