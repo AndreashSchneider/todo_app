@@ -91,6 +91,14 @@ textarea {
 <% loesungen             = @comments.select do |satz| satz.category == 'Loesung_Idee' end %>
 <% bedenken_einwaende    = @comments.select do |satz| satz.category == 'Bedenken_Einwaende' end %>
 <% information_Sichtweise= @comments.select do |satz| satz.category == 'Information_Sichtweise' end %>
+<!-- und noch jeweils sortieren nach der id -->
+<% [herausforderung,loesungen,bedenken_einwaende,information_Sichtweise].each do |ergebnis|
+   ergebnis = ergebnis.sort_by{|comment|comment.id}
+  end
+%>
+  
+
+
  <div id="Herausforderung" >
    <h3>Herausforderung</h3>
    <%= render :partial => :comments, :collection => herausforderung, :locals => { :list => true } %>
